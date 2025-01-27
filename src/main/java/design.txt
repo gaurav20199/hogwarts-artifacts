@@ -1,0 +1,10 @@
+Package Structure is based on Domain Driven structure.
+We will most probably have three big chunks of services::
+1) Wizard Management
+2) Artifact Management
+3) User/Client Management
+
+Security will mostly be managed by Spring Security. We will do configs for that.
+
+
+       Artifact

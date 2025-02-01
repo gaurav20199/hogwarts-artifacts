@@ -34,11 +34,7 @@ public class ArtifactController {
 
     @GetMapping("/artifact/{id}")
     public Response getArtifactById(@PathVariable("id") Integer artifactId) {
-        try {
-            Artifact artifact = artifactService.getArtifactsById(artifactId);
-            return new Response(true,HttpStatus.OK.value(),artifact);
-        }catch (ArtifactNotFound e) {
-            return new Response(false,HttpStatus.NOT_FOUND.value(), ArtifactConstants.ARTIFACT_NOT_FOUND);
-        }
+        Artifact artifact = artifactService.getArtifactsById(artifactId);
+        return new Response(true,HttpStatus.OK.value(),artifact);
     }
 }

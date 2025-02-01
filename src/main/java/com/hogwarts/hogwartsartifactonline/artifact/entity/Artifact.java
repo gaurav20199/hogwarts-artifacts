@@ -4,7 +4,6 @@ import com.hogwarts.hogwartsartifactonline.wizard.Wizard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 @Entity
 public class Artifact {
@@ -55,4 +54,6 @@ public class Artifact {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
 }

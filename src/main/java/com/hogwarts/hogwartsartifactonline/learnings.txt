@@ -1,0 +1,12 @@
+JSON INFINITE RECURSION
+1) For a bidirectional one to many mapping, we might land into Stack overflow error.
+For eg:                                           ______ Artifact(id 6)
+                                                 |
+          Artifact(Id 1)------>Wizard(id 4)--------------Artifact(id 5)
+                                                 |
+                                                 |________ Artifact(id 1) ----> Wizard(id 4) and so on.....
+
+This can be avoided in multiple ways.
+1) Using Json Ignore annotation so that one side is not part of json and will be skipped.
+2) Using JSONBackReference(on child entity) and JsonManagedReference(on Parent entity)
+3) Using DTO Pattern(which will be using as we don't have to expose entity info on the json)

@@ -1,12 +1,15 @@
 package com.hogwarts.hogwartsartifactonline.artifact.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hogwarts.hogwartsartifactonline.wizard.entity.Wizard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.io.Serializable;
+import java.util.Optional;
 
 @Entity
-public class Artifact {
+public class Artifact implements Serializable {
     @Id
     private Integer id;
     private String name;
@@ -15,8 +18,8 @@ public class Artifact {
     @ManyToOne
     private Wizard wizard;
 
-    public Wizard getWizard() {
-        return wizard;
+    public Optional<Wizard> getWizard() {
+        return Optional.ofNullable(this.wizard);
     }
 
     public void setWizard(Wizard wizard) {
@@ -55,5 +58,14 @@ public class Artifact {
         this.imageUrl = imageUrl;
     }
 
-
+    @Override
+    public String toString() {
+        return "Artifact{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", wizard=" + wizard +
+                '}';
+    }
 }

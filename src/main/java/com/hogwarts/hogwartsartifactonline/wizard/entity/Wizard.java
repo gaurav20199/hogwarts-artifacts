@@ -7,11 +7,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Wizard {
+public class Wizard implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -39,5 +40,18 @@ public class Wizard {
     public void addArtifact(Artifact artifact) {
         artifact.setWizard(this);
         this.artifacts.add(artifact);
+    }
+
+    public int getNumberOfArtifacts() {
+        return this.artifacts.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Wizard{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", artifacts=" + artifacts +
+                '}';
     }
 }

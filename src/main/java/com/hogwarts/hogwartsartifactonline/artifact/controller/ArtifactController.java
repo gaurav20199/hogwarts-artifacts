@@ -1,7 +1,8 @@
 package com.hogwarts.hogwartsartifactonline.artifact.controller;
 
+import com.hogwarts.hogwartsartifactonline.artifact.converter.ArtifactToArtifactDTOConverter;
+import com.hogwarts.hogwartsartifactonline.artifact.dto.ArtifactDTO;
 import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
-import com.hogwarts.hogwartsartifactonline.artifact.exception.ArtifactNotFound;
 import com.hogwarts.hogwartsartifactonline.artifact.service.ArtifactService;
 import com.hogwarts.hogwartsartifactonline.utils.Response;
 import com.hogwarts.hogwartsartifactonline.utils.constants.ArtifactConstants;
@@ -16,11 +17,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1")
 public class ArtifactController {
-
     private final ArtifactService artifactService;
+    private final ArtifactToArtifactDTOConverter artifactToArtifactDTOConverter;
 
-    public ArtifactController(ArtifactService service) {
+    public ArtifactController(ArtifactService service,ArtifactToArtifactDTOConverter artifactToArtifactDTOConverter) {
         this.artifactService = service;
+        this.artifactToArtifactDTOConverter = artifactToArtifactDTOConverter;
     }
 
     @GetMapping("/artifacts")
@@ -35,6 +37,7 @@ public class ArtifactController {
     @GetMapping("/artifact/{id}")
     public Response getArtifactById(@PathVariable("id") Integer artifactId) {
         Artifact artifact = artifactService.getArtifactsById(artifactId);
-        return new Response(true,HttpStatus.OK.value(),artifact);
+        ArtifactDTO artifactDTO = artifactToArtifactDTOConverter.convert(artifact);
+        return new Response(true,HttpStatus.OK.value(),artifactDTO);
     }
 }

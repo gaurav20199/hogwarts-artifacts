@@ -21,6 +21,7 @@ public class DBDataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        /*
         Artifact a1 = new Artifact();
         a1.setId(1);
         a1.setName("Deluminator");
@@ -79,5 +80,7 @@ public class DBDataInitializer implements CommandLineRunner {
         wizardRepository.save(w3);
 
         artifactRepository.save(a6);
+
+         */
     }
 }

@@ -3,7 +3,7 @@ package com.hogwarts.hogwartsartifactonline.artifact.service;
 import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
 import com.hogwarts.hogwartsartifactonline.artifact.exception.ArtifactNotFound;
 import com.hogwarts.hogwartsartifactonline.artifact.repository.ArtifactRepository;
-import com.hogwarts.hogwartsartifactonline.wizard.Wizard;
+import com.hogwarts.hogwartsartifactonline.wizard.entity.Wizard;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ class ArtifactServiceTest {
         Wizard wizard = new Wizard();
         wizard.setName("Test Wizard");
 
-        artifact.setOwner(wizard);
+        artifact.setWizard(wizard);
 
         // defining behaviour of mock object
         BDDMockito.given(repository.findById(123)).willReturn(Optional.of(artifact));

@@ -1,0 +1,43 @@
+package com.hogwarts.hogwartsartifactonline.wizard.entity;
+
+import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Wizard {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    // bidirectional one-to-many relationship
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},mappedBy = "wizard")
+    private List<Artifact> artifacts = new ArrayList<>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void addArtifact(Artifact artifact) {
+        artifact.setWizard(this);
+        this.artifacts.add(artifact);
+    }
+}

@@ -1,6 +1,6 @@
 package com.hogwarts.hogwartsartifactonline.artifact.entity;
 
-import com.hogwarts.hogwartsartifactonline.wizard.Wizard;
+import com.hogwarts.hogwartsartifactonline.wizard.entity.Wizard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -13,14 +13,14 @@ public class Artifact {
     private String description;
     private String imageUrl;
     @ManyToOne
-    private Wizard owner;
+    private Wizard wizard;
 
-    public Wizard getOwner() {
-        return owner;
+    public Wizard getWizard() {
+        return wizard;
     }
 
-    public void setOwner(Wizard owner) {
-        this.owner = owner;
+    public void setWizard(Wizard wizard) {
+        this.wizard = wizard;
     }
 
     public Integer getId() {

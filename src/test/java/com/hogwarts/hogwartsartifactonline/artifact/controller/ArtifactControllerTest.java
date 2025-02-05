@@ -4,6 +4,8 @@ import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
 import com.hogwarts.hogwartsartifactonline.artifact.exception.ArtifactNotFound;
 import com.hogwarts.hogwartsartifactonline.artifact.service.ArtifactService;
 import com.hogwarts.hogwartsartifactonline.utils.constants.ArtifactConstants;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -109,5 +113,15 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.status").value(HttpStatus.NOT_FOUND.value()))
                 .andExpect(jsonPath("$.message").value(ArtifactConstants.ARTIFACT_NOT_FOUND));
 
+    }
+
+    @Test
+    void testFindAllArtifactsSuccess() throws Exception {
+        BDDMockito.given(artifactService.getAllArtifacts()).willReturn(Optional.ofNullable(this.artifacts));
+
+        this.mockMvc.perform(get("/api/v1/artifacts").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.status").value(HttpStatus.OK.value()))
+                .andExpect(jsonPath("$.data", Matchers.hasSize(this.artifacts.size())));
     }
 }

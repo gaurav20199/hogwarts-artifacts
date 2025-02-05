@@ -6,9 +6,12 @@ import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
 import com.hogwarts.hogwartsartifactonline.artifact.service.ArtifactService;
 import com.hogwarts.hogwartsartifactonline.utils.Response;
 import com.hogwarts.hogwartsartifactonline.utils.constants.ArtifactConstants;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -39,5 +42,12 @@ public class ArtifactController {
         Artifact artifact = artifactService.getArtifactsById(artifactId);
         ArtifactDTO artifactDTO = artifactToArtifactDTOConverter.convert(artifact);
         return new Response(true,HttpStatus.OK.value(),artifactDTO);
+    }
+
+    @PostMapping("/artifacts")
+    public Response saveArtifact(@Valid @RequestBody ArtifactDTO artifactDTO) {
+        Artifact savedArtifact = artifactService.saveArtifact(artifactDTO);
+        ArtifactDTO response = artifactToArtifactDTOConverter.convert(savedArtifact);
+        return new Response(true,HttpStatus.CREATED.value(), response);
     }
 }

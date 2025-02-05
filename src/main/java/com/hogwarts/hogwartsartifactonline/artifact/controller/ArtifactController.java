@@ -38,8 +38,8 @@ public class ArtifactController {
     }
 
     @GetMapping("/artifact/{id}")
-    public Response getArtifactById(@PathVariable("id") Integer artifactId) {
-        Artifact artifact = artifactService.getArtifactsById(artifactId);
+    public Response getArtifactById(@PathVariable("id") String artifactId) {
+        Artifact artifact = artifactService.getArtifactsByUUID(artifactId);
         ArtifactDTO artifactDTO = artifactToArtifactDTOConverter.convert(artifact);
         return new Response(true,HttpStatus.OK.value(),artifactDTO);
     }

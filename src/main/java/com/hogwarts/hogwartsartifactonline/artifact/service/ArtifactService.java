@@ -27,8 +27,8 @@ public class ArtifactService {
         return Optional.ofNullable(artifactRepository.findAll());
     }
 
-    public Artifact getArtifactsById(Integer artifactId) throws ArtifactNotFound{
-        return artifactRepository.findById(artifactId).
+    public Artifact getArtifactsByUUID(String artifactId) throws ArtifactNotFound{
+        return artifactRepository.findByUuid(artifactId).
                 orElseThrow(() -> new ArtifactNotFound(artifactId));
     }
 

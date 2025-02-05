@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import org.hibernate.annotations.UuidGenerator;
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -15,6 +16,9 @@ public class Artifact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @UuidGenerator
+    private String uuid;
     private String name;
     private String description;
     private String imageUrl;
@@ -70,5 +74,13 @@ public class Artifact implements Serializable {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", wizard=" + wizard +
                 '}';
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

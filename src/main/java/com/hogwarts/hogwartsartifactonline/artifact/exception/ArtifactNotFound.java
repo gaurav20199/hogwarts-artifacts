@@ -6,7 +6,7 @@ public class ArtifactNotFound extends RuntimeException{
         super(msg+":"+artifactId);
     }
 
-    public ArtifactNotFound(int artifactId) {
+    public ArtifactNotFound(String artifactId) {
         super("Could not find artifact with id::"+artifactId);
     }
     

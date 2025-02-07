@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ArtifactRepository extends JpaRepository<Artifact,Integer> {
 
     Optional<Artifact> findByUuid(String uuid);
+    void deleteByUuid(String uuid);
 }

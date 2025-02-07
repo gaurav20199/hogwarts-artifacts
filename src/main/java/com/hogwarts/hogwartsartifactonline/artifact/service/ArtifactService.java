@@ -6,7 +6,6 @@ import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
 import com.hogwarts.hogwartsartifactonline.artifact.exception.ArtifactNotFound;
 import com.hogwarts.hogwartsartifactonline.artifact.repository.ArtifactRepository;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,8 +20,7 @@ public class ArtifactService {
     private final ArtifactDTOToArtifactConverter artifactDTOToArtifactConverter;
 
     public ArtifactService(ArtifactRepository artifactRepository,
-                           ArtifactDTOToArtifactConverter artifactDTOToArtifactConverter,
-                           ModelMapper modelMapper) {
+                           ArtifactDTOToArtifactConverter artifactDTOToArtifactConverter) {
         this.artifactRepository = artifactRepository;
         this.artifactDTOToArtifactConverter = artifactDTOToArtifactConverter;
     }
@@ -41,13 +39,18 @@ public class ArtifactService {
         return artifactRepository.save(artifact);
     }
 
-    public Artifact updateArtifact(ArtifactDTO artifactDTO,String artifactId) {
-        Artifact artifactFromDB = artifactRepository.findByUuid(artifactId)
-                .orElseThrow(() -> new ArtifactNotFound(artifactId));
+    public Artifact updateArtifactByUUID(ArtifactDTO artifactDTO,String artifactUUID) {
+        Artifact artifactFromDB = artifactRepository.findByUuid(artifactUUID)
+                .orElseThrow(() -> new ArtifactNotFound(artifactUUID));
         BeanUtils.copyProperties(artifactDTO,artifactFromDB,"uuid");
         artifactFromDB.setUuid(artifactFromDB.getUuid());
         artifactFromDB.setId(artifactFromDB.getId());
         return artifactRepository.save(artifactFromDB);
+    }
+
+    public void deleteArtifactByUUID(String artifactUUID) throws ArtifactNotFound {
+        Artifact artifact = artifactRepository.findByUuid(artifactUUID).orElseThrow(() -> new ArtifactNotFound(artifactUUID));
+        artifactRepository.deleteByUuid(artifact.getUuid());
     }
 
 }

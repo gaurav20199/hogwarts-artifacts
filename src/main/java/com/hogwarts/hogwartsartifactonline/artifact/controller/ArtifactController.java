@@ -3,11 +3,13 @@ package com.hogwarts.hogwartsartifactonline.artifact.controller;
 import com.hogwarts.hogwartsartifactonline.artifact.converter.ArtifactToArtifactDTOConverter;
 import com.hogwarts.hogwartsartifactonline.artifact.dto.ArtifactDTO;
 import com.hogwarts.hogwartsartifactonline.artifact.entity.Artifact;
+import com.hogwarts.hogwartsartifactonline.artifact.exception.ArtifactNotFound;
 import com.hogwarts.hogwartsartifactonline.artifact.service.ArtifactService;
 import com.hogwarts.hogwartsartifactonline.utils.Response;
 import com.hogwarts.hogwartsartifactonline.utils.constants.ArtifactConstants;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,8 +43,8 @@ public class ArtifactController {
     }
 
     @GetMapping("/artifact/{id}")
-    public Response getArtifactById(@PathVariable("id") String artifactId) {
-        Artifact artifact = artifactService.getArtifactsByUUID(artifactId);
+    public Response getArtifactById(@PathVariable("id") String artifactUUID) {
+        Artifact artifact = artifactService.getArtifactsByUUID(artifactUUID);
         ArtifactDTO artifactDTO = artifactToArtifactDTOConverter.convert(artifact);
         return new Response(true,HttpStatus.OK.value(),artifactDTO);
     }
@@ -55,10 +57,16 @@ public class ArtifactController {
     }
 
     @PutMapping("/artifacts/{artifactId}")
-    public Response updateArtifact(@Valid @RequestBody ArtifactDTO artifactDTO,@PathVariable String artifactId) {
-        Artifact updatedArtifact = artifactService.updateArtifact(artifactDTO,artifactId);
+    public Response updateArtifact(@Valid @RequestBody ArtifactDTO artifactDTO,@PathVariable String artifactUUID) {
+        Artifact updatedArtifact = artifactService.updateArtifactByUUID(artifactDTO,artifactUUID);
         ArtifactDTO response = artifactToArtifactDTOConverter.convert(updatedArtifact);
         return new Response(true,HttpStatus.OK.value(), response);
+    }
+
+    @DeleteMapping("/artifacts/{artifactId}")
+    public Response deleteArtifact(@PathVariable String artifactId) {
+        artifactService.deleteArtifactByUUID(artifactId);
+        return new Response(true,HttpStatus.NO_CONTENT.value(),"Successfully Deleted the artifact with uuid::"+artifactId);
     }
 
 

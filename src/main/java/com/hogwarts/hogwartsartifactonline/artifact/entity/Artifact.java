@@ -25,6 +25,10 @@ public class Artifact implements Serializable {
     @ManyToOne
     private Wizard wizard;
 
+    public Artifact() {
+
+    }
+
     public Optional<Wizard> getWizard() {
         return Optional.ofNullable(this.wizard);
     }
